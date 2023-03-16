@@ -1,0 +1,42 @@
+.top-container {
+    background-color: black;
+    margin: -20px -20px 0 -20px;
+}
+
+.top-line {
+    height: 145px;
+    padding: 40px 20px 0 20px;
+    background-color: rgb(0, 0, 0);
+    color: white;
+}
+ 
+.company-logo {
+    height: 100%;
+    position: relative;
+    left: 5%;
+    margin-right: 950px;
+}
+
+.credit-score {
+    position: relative;
+    bottom: 50%;
+}
+
+.login {
+    position: relative;
+    bottom: 50%;
+}
+
+a {
+    color: #ffffff;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 20px;
+    padding: 10px 20px;
+
+}
+
+a:link { text-decoration: none; }
+a:visited { text-decoration: none; }
+a:hover { text-decoration: none;
+          background-color: #7065EF; }
+a:active { text-decoration: none; }
