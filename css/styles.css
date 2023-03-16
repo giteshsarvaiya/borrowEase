@@ -1,6 +1,6 @@
 .top-container {
     background-color: black;
-    margin: -20px -20px 0 -20px;
+    margin: -10px -8px 0 -8px;
 }
 
 .top-line {
@@ -8,6 +8,30 @@
     padding: 40px 20px 0 20px;
     background-color: rgb(0, 0, 0);
     color: white;
+}
+.top-content {
+   background-color:black;
+   height: 600px;
+   padding-top: 50px;
+}
+#slogan {
+    text-align: center;
+    font-size: 72px;
+    color: white;
+    font-family:sans-serif;
+    line-height: 100px;
+    background-image: url("https://media3.giphy.com/media/2SYpZ92iLQsF6QZl5u/200w.webp?cid=ecf05e472ocffa2ihmlw5qxf4rjehr1t3xypxoa80wlcqrcz&rid=200w.webp&ct=g");
+    background-size: cover;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+
+}
+#below-slogan{
+    color: white;
+    text-align: center;
+    font-size: 36px;
+    font-family: 'Josefin Sans', sans-serif;
+    line-height: 0;
 }
  
 .company-logo {
@@ -25,6 +49,17 @@
 .login {
     position: relative;
     bottom: 50%;
+}
+
+.middle-container {
+    height: 1000px;
+}
+
+.bottom-container {
+    background-color: #2f3335;
+    height: 300px;
+    padding: 50px 0 20px;
+    margin: 0 -8px -10px -8px;
 }
 
 a {
