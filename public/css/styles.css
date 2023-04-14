@@ -403,10 +403,17 @@ a:active { text-decoration: none; }
   }
   
 .create-Demand {
-    background-color: #7065EF;
+    background-color: #0007d9;
     color: #ccc;
     position: fixed;
     bottom: 30px;
     right: 45px;
+    border-radius: 30px;
 
 }
+
+.create-Demand:hover {
+    color: #0007d9;
+    background-color: #ccc;
+    border-color: #e8ebef;
+  }
