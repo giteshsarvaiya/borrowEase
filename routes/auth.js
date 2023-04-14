@@ -31,6 +31,14 @@ passport.use(User.createStrategy());
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
+/* function for current time */
+var today = new Date();
+var date = today.getDate()+'-'+(today.getMonth()+1)+'-'+today.getFullYear()
+var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+var dateTime =time+' '+date;
+ 
+console.log(dateTime)
+
 /* authCheck to redirect to previous page*/
 const authCheck = (req,res,next) => {
   if(!req.user){
