@@ -347,7 +347,6 @@ a:active { text-decoration: none; }
     flex-direction: column;
     margin-bottom: 1rem;
     align-self: center;
-    bottom: 50px;
   }
   
   .label-cd {
