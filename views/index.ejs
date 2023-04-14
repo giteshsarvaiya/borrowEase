@@ -1,13 +1,14 @@
 <%- include("partials/header") -%>
+<%  newDemands.forEach(function(demand){ %>
 <div class="demandPost">
     <div class="demand">
         <div class="demand-header">
           <!--<img src="profile-picture.jpg" alt="Profile Picture">-->
-          <h3>Gitesh</h3>
-          <span class="time">12:49 </span>
+          <h3><%=demand.userDetails.userName%></h3>
+          <span class="time">Time</span>
         </div>
         <div class="demand-body">
-          <p>I demand this much of money</p>
+          <p>I want <%=demand.amount%> Rupees</p>
           <img src="images/favicon.ico" alt="BorrowEase Image">
         </div>
         <div class="demand-footer">
@@ -16,6 +17,7 @@
         </div>
       </div>
 </div>
+<%  }) %>
 <div>
     <a href="/createDemand" class="create-Demand">Demand money</a>
 </div>

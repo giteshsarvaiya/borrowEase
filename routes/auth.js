@@ -1,3 +1,4 @@
+const { log } = require("console");
 const express = require("express"),
       bodyParser = require("body-parser"),
       ejs = require("ejs"),
@@ -23,21 +24,77 @@ router.use(passport.session());
 
 mongoose.connect("mongodb://127.0.0.1:27017/UserDB", { useNewUrlParser: true });
 
-// importing user model
-const User = require("../model/User")
+
+/* userSchema */
+const userSchema = new mongoose.Schema({
+  userName: {
+    type: String
+},
+  uniRollNo: {
+    type: Number
+},
+  email: {
+    type: String
+},
+password: {
+    type: String
+}
+});
+userSchema.plugin(passportLocalMongoose);
+
+const User = new mongoose.model("User",userSchema)
+
+/* demandSchema */
+const demandSchema = new mongoose.Schema({
+  userDetails: {
+    type: userSchema
+  },
+  amount: {
+    type: Number
+  },
+  Time: {
+    type: String
+  }
+
+});
+
+const Demand = new mongoose.model("Demand", demandSchema);
+// module.exports = mongoose.model("Demand", demandSchema);
+
+ /* creating user for demo */
+ const user1 = new User ({
+  userName: "rajeevranjan",
+  uniRollNo: 1001,
+  email: "rajeevranjan@gmail.com",
+  password: "rajeevranjan",
+ })
+
+ /* Create a Demand*/
+ const demand1 = new Demand ({
+  userDetails: user1,
+  amount: 500,
+  time: dateTime,
+
+ })
+ 
+
+// // importing user model
+// const User = require("../model/User")
 
 passport.use(User.createStrategy());
 
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
+
+
+
 /* function for current time */
 var today = new Date();
 var date = today.getDate()+'-'+(today.getMonth()+1)+'-'+today.getFullYear()
 var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
 var dateTime =time+' '+date;
- 
-console.log(dateTime)
+//console.log(dateTime)
 
 /* authCheck to redirect to previous page*/
 const authCheck = (req,res,next) => {
@@ -48,15 +105,44 @@ const authCheck = (req,res,next) => {
     next();
   }
 };
+const defaultDemands = [demand1];
+
+async function getDemands(){
+  const Demands = await Demand.find({});
+  return Demands;
+}
 
 //show home page
 router.get("/", function (req, res) {
-  res.render("index");
-});
+  getDemands().then(function(foundDemands){
+    if (foundDemands.length === 0) {
+      Demand.insertMany(defaultDemands);
+      res.redirect("/");
+    } else {
+      res.render("index", {newDemands: foundDemands });
+    }
+
+  });
+
+  //  res.render("index");
+  });
+
+
+  // res.render("index");
 
 // Showing index page
 router.get("/index", isLoggedIn, function (req, res) {
-  res.render("index");
+  getDemands().then(function(foundDemands){
+    if (foundDemands.length === 0) {
+      Demand.insertMany(defaultDemands);
+      res.redirect("/");
+    } else {
+      res.render("index", {newDemands: foundDemands });
+    }
+
+  });
+
+  // res.render("index");
 });
 
 // Showing register form
@@ -103,6 +189,7 @@ router.post("/register", async (req, res) => {
 //Showing login form
 router.get("/login", function (req, res) {
   res.render("login");
+
 });
 
 //Handling user login
