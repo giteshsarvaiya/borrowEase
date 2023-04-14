@@ -52,6 +52,11 @@ router.get("/payment", function (req, res) {
   res.render("payment");
 });
 
+// Showing paymentSuccessful
+router.get("/paymentSuccessful", function (req, res) {
+  res.render("paymentSuccessful");
+});
+
 //show content page after login only
 router.get("/createDemand",(req,res)=>{
   if(req.isAuthenticated()){
