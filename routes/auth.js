@@ -31,6 +31,15 @@ passport.use(User.createStrategy());
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
+/* authCheck to redirect to previous page*/
+const authCheck = (req,res,next) => {
+  if(!req.user){
+    req.session.redirectUrl = req.redirectUrl;
+    res.redirect('login');
+  } else {
+    next();
+  }
+};
 
 //show home page
 router.get("/", function (req, res) {
@@ -48,8 +57,8 @@ router.get("/register", function (req, res) {
 });
 
 // Showing payment gateway
-router.get("/payment", function (req, res) {
-  res.render("payment");
+router.get("/payment",authCheck, function (req, res) {
+  res.render("payment"); 
 });
 
 // Showing paymentSuccessful
@@ -57,10 +66,10 @@ router.get("/paymentSuccessful", function (req, res) {
   res.render("paymentSuccessful");
 });
 
-//show content page after login only
+//show createDemand page after login only
 router.get("/createDemand",(req,res)=>{
   if(req.isAuthenticated()){
-    res.render("content")
+    res.render("createDemand")
   }else{
     res.redirect("/login")
   }
@@ -77,7 +86,7 @@ router.post("/register", async (req, res) => {
    }
    else{
     passport.authenticate('local')(req, res, function () {
-      res.redirect('/content');
+      res.redirect('/index');
     })
   }
   });  
@@ -101,7 +110,8 @@ router.post("/login", function(req, res){
           console.log(err)
         }else{
           passport.authenticate("local")(req,res,function(){
-            res.redirect("/content")
+
+            res.redirect("/index")
           })
         }
       })

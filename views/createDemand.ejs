@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Money Request Form</title>
+    <link rel="stylesheet" href="../css/styles.css">
+  </head>
+  <body>
+    <form>
+      <div class="form-cD">
+        <label class="label-cD" for="amount">Required Money:</label>
+        <input type="text" min="0" max="5000" class="form-control-range input-cD" id="amount">
+        <span id="amount-value">0 Rupees</span>
+      </div>
+      <div class="form-cD">
+        <label for="reason">Reason:</label>
+        <textarea class="form-control" id="reason" rows="3"></textarea>
+      </div>
+      <button type="submit" class="btn-cD btn-primary">Post</button>
+    </form>
+  </body>
+</html>

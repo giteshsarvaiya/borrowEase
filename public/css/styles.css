@@ -285,7 +285,7 @@ a:active { text-decoration: none; }
     color: #555;
   }
   
-  button[type="submit"] {
+  .button-p[type="button"] {
     padding: 10px;
     background-color: #1da1f2;
     color: #fff;
@@ -295,7 +295,7 @@ a:active { text-decoration: none; }
     cursor: pointer;
   }
   
-  button[type="submit"]:hover {
+  .button-p[type="button"]:hover {
     background-color: #0c8de3;
   }
   
@@ -339,3 +339,75 @@ a:active { text-decoration: none; }
     background-color: #0c8de3;
   }
   
+
+  /* for createDemand */
+
+  .form-cD {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 1rem;
+    align-self: center;
+    bottom: 50px;
+  }
+  
+  .label-cd {
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+  }
+  
+  .input-cD[type="range"] {
+    width: 100%;
+  }
+  
+  #amount-value {
+    margin-top: 0.5rem;
+    font-size: 1.25rem;
+    font-weight: bold;
+  }
+  
+  textarea {
+    resize: none;
+  }
+  
+
+  .btn-cD {
+    display: inline-block;
+    font-weight: 400;
+    color: #212529;
+    text-align: center;
+    vertical-align: middle;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    background-color: transparent;
+    border: 1px solid #007bff;
+    padding: 0.375rem 0.75rem;
+    font-size: 1rem;
+    line-height: 1.5;
+    border-radius: 0.25rem;
+    transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out,
+      border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+    
+  }
+  
+  .btn-primary {
+    color: #fff;
+    background-color: #007bff;
+    border-color: #007bff;
+  }
+  
+  .btn-primary:hover {
+    color: #fff;
+    background-color: #0069d9;
+    border-color: #0062cc;
+  }
+  
+.create-Demand {
+    background-color: #7065EF;
+    color: #ccc;
+    position: fixed;
+    bottom: 30px;
+    right: 45px;
+
+}
