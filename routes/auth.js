@@ -47,8 +47,13 @@ router.get("/register", function (req, res) {
   res.render("register");
 });
 
+// Showing payment gateway
+router.get("/payment", function (req, res) {
+  res.render("payment");
+});
+
 //show content page after login only
-router.get("/content",(req,res)=>{
+router.get("/createDemand",(req,res)=>{
   if(req.isAuthenticated()){
     res.render("content")
   }else{

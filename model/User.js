@@ -1,11 +1,18 @@
 const mongoose = require("mongoose")
 const userSchema = new mongoose.Schema({
+    userName: {
+      type: String
+  },
+    uniRollNo: {
+      type: Number
+  },
     email: {
       type: String
   },
   password: {
       type: String
   }
+
   });
   
   userSchema.plugin(passportLocalMongoose);

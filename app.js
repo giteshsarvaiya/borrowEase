@@ -1,9 +1,11 @@
-const express = require("express")
-const app = express();
+let express = require('express');
+let app = express();
 const path = require("path")
 const route = require("./routes/auth")
 
-app.set("view engine", "ejs");
+app.set('view engine', 'ejs');
+
+
 
 app.use(express.static(path.join(__dirname, 'public')));
 
