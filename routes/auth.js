@@ -11,7 +11,7 @@ const express = require("express"),
 var router = express.Router();
 router.use(express.static(path.join(__dirname, 'public')));
 
-router.use(bodyParser.urlencoded({extended:true}))
+router.use(bodyParser.urlencoded({extended:true})); 
 
 router.use(session({
   secret: "this is my secret",
@@ -47,12 +47,15 @@ const User = new mongoose.model("User",userSchema)
 /* demandSchema */
 const demandSchema = new mongoose.Schema({
   userDetails: {
-    type: userSchema
+    type: [userSchema]
   },
   amount: {
     type: Number
   },
-  Time: {
+  time: {
+    type: String
+  },
+  reason: {
     type: String
   }
 
@@ -68,15 +71,15 @@ const Demand = new mongoose.model("Demand", demandSchema);
   email: "rajeevranjan@gmail.com",
   password: "rajeevranjan",
  })
-
+// user1.save();
  /* Create a Demand*/
  const demand1 = new Demand ({
-  userDetails: user1,
+  userDetails: [user1],
   amount: 500,
   time: dateTime,
+  // reason: "Educational purpose",
 
  })
- 
 
 // // importing user model
 // const User = require("../model/User")
@@ -108,10 +111,28 @@ const authCheck = (req,res,next) => {
 const defaultDemands = [demand1];
 
 async function getDemands(){
-  const Demands = await Demand.find({});
-  return Demands;
+  const foundDemands = await Demand.find({});
+  return foundDemands;
 }
 
+// router.get("/", function (req, res) {
+  // res.send("hello, ${req.user.userName}!")
+  // const demandAmount = req.body.amount; 
+  // const reasonOfDemand = req.body.reason;
+  // const myName = req.user.userName;
+  // // const myUniNo = req.user.uniRollNo;
+  // const demand = new Demand({
+  //   userDetails:{userName: myName
+  //   },
+  //   amount: demandAmount,
+  //   reason: reasonOfDemand,
+  // });
+
+  // Demand.findOne({userName:[myName]}, function(err, foundDemands){
+  //   foundDemands.demands.push(demand);
+  //   foundDemands.save();
+  //   res.redirect("/");
+  // });
 //show home page
 router.get("/", function (req, res) {
   getDemands().then(function(foundDemands){
@@ -128,8 +149,9 @@ router.get("/", function (req, res) {
   });
 
 
-  // res.render("index");
 
+  // res.render("index");
+    const foundDemands = [];
 // Showing index page
 router.get("/index", isLoggedIn, function (req, res) {
   getDemands().then(function(foundDemands){
@@ -228,4 +250,4 @@ router.post("/login", function(req, res){
     res.redirect("/login");
   }
 
-  module.exports = router;
+  module.exports = router
