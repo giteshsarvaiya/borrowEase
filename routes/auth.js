@@ -127,14 +127,16 @@ async function getDemands(){
   return Demands;
 };
 
-async function getDetails(){
-  const Details = await Detail.find({username: req.body.username});
-  return Demands;
-};
+// async function getUserDemands(){
+//   const Demands = await Demand.find({userdetail: detail});
+//   return Demands;
+// };
+
+
 
 
 //show content page
-router.get("/content", function (req, res) {
+router.get("/content", function (req, res){
   if(req.isAuthenticated()){
     getDemands().then(function(foundDemands){
       if (foundDemands.length === 0) {
@@ -143,13 +145,11 @@ router.get("/content", function (req, res) {
       } else {
         Detail.findOne({ 'username': req.user.username }).then(function(detail) {
           console.log(detail);
-          
-            })
         console.log(req.user);
         res.render("content",{ newDemands: foundDemands} );
-      }
-  
-    });
+      });
+    }
+    })
   }else{
     res.redirect("/login")
   }
@@ -183,6 +183,30 @@ router.get("/", function (req, res) {
 router.get("/tnc", function (req, res) {
   res.render("tnc");
 });
+
+// Showing profile page
+router.get("/profile", function (req, res) {
+  if(req.isAuthenticated()){
+    Detail.findOne({ 'username': req.user.username }).then(function(detail) {
+      console.log(detail);
+      async function getUserDemands(){
+        const Demands = await Demand.find({userdetail: detail});
+        return Demands;
+      };
+      getUserDemands().then(function(Demands){
+      if (Demands.length === 0) {
+        res.render("profile", {username: req.user.username, email: detail.email, demands: Demands, noOfDemands: Demands.length});
+      } else {
+        res.render("profile", {username: req.user.username, email: detail.email, demands: Demands , noOfDemands: Demands.length});
+            }
+          });
+      });
+  
+    }else{
+    res.redirect("/login")
+  }
+});
+
 
 // Showing register form
 router.get("/register", function (req, res) {

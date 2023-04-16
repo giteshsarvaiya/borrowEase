@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>User Profile</title>
+</head>
+<body>
+	<div style="max-width: 800px; margin: 0 auto; padding: 20px;">
+		<h1 style="text-align: center;">User Profile</h1>
+		<hr>
+		<div style="display: flex; justify-content: center;">
+			<img src="https://via.placeholder.com/150" alt="Profile Picture" style="border-radius: 50%; margin-right: 20px;">
+			<div>
+				<h2><%=username%></h2>
+				<p>Email: <%=email%></p>
+			</div>
+		</div>
+		<hr>
+		<h3>Your Demands</h3>
+
+		<% if (noOfDemands === 0) { %>
+			<p>you have <%=noOfDemands%> demands</p>
+			<div class="demandPost">
+				<div class="demand">
+				  <div class="demand-header">
+					<!--<img src="profile-picture.jpg" alt="Profile Picture">-->
+					<h3><%=username%></h3>
+					<span class="time">--</span>
+				  </div>
+				  <div class="demand-body">
+					<p>No demands from your side yet</p>
+					<img src="images/favicon.ico" alt="BorrowEase Image">
+				  </div>
+				  <div class="demand-footer">
+					<!-- <a href="#" class="reply-link">reply</a> -->
+					<!-- <a href="/delete" class="delete-link">delete</a> -->
+				  </div>
+				</div>
+		
+			
+			<%} else { %>
+				<p>you have <%=noOfDemands%> demands</p>
+				<%  demands.forEach(function(demand){ %>
+					<div class="demandPost">
+						<div class="demand">
+						  <div class="demand-header">
+							<!--<img src="profile-picture.jpg" alt="Profile Picture">-->
+							<h3><%=username%></h3>
+							<span class="time"><%=demand.time%></span>
+						  </div>
+						  <div class="demand-body">
+							<p>I want <%=demand.amount%> Rupees for <%=demand.reason%></p>
+							<img src="images/favicon.ico" alt="BorrowEase Image">
+						  </div>
+						  <div class="demand-footer">
+							<!-- <a href="#" class="reply-link">reply</a> -->
+							<a href="/delete" class="delete-link">delete</a>
+						  </div>
+						</div>
+					<%  }) %>
+				
+
+			<% } %>
+		<p style="font-style: italic;">Your Demands</p>
+		<hr>
+		<h3>About Me</h3>
+		<p style="font-style: italic;">No information provided yet.</p>
+	</div>
+</body>
+</html>
