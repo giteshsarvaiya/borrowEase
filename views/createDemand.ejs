@@ -5,14 +5,14 @@
     <link rel="stylesheet" href="../css/styles.css">
   </head>
   <body>
-    <form action="/content">
+    <form action="/createDemand" method="POST">
       <div class="form-cD">
         <label class="label-cD" name="amount" for="amount">Required Money:</label>
-        <input type="text" name="amount" min="0" max="5000" class="form-control-range input-cD" id="amount">
+        <input type="text" name ="amount" class="form-control-range input-cD" id="amount" />
       </div>
       <div class="form-cD">
         <label name="reason" for="reason">Reason:</label>
-        <input name="reason" class="form-control" id="reason" rows="3"></input>
+        <input type="text "name="reason" class="form-control" id="reason" />
       </div>
       <button type="submit" class="btn-cD btn-primary">Post</button>
     </form>

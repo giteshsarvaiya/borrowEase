@@ -81,6 +81,11 @@ const user1 = new User({
   uniRollNo: 1001,
   email: "rajeevranjan@gmail.com",
  });
+ const detail2 = new Detail ({
+  username: "1234",
+  uniRollNo: 1234,
+  email: "1234@gmail.com",
+ });
 
  /* Create a Demand*/
 const demand1 = new Demand ({
@@ -89,6 +94,15 @@ const demand1 = new Demand ({
   time: dateTime,
   reason: "Educational Purpose",
 });
+
+const demand2 = new Demand ({
+  userdetail: detail2,
+  amount: 500,
+  time: dateTime,
+  reason: "rent",
+});
+
+
 
  /* Registering Demo User1  */
 //  User.register({username: "rajeevranjan"}, "rajeevranjan"); // commented because it is supposed to run once only. otherwise it will throw error that the user already exists in DB.
@@ -106,12 +120,18 @@ const authCheck = (req,res,next) => {
 };
 
 /* array of default posts */
-const defaultDemands = [demand1];
+const defaultDemands = [demand1, demand2];
 
 async function getDemands(){
   const Demands = await Demand.find({});
   return Demands;
 };
+
+async function getDetails(){
+  const Details = await Detail.find({username: req.body.username});
+  return Demands;
+};
+
 
 //show content page
 router.get("/content", function (req, res) {
@@ -121,7 +141,11 @@ router.get("/content", function (req, res) {
         Demand.insertMany(defaultDemands);
         res.redirect("/content");
       } else {
-        console.log(req.user.username);
+        Detail.findOne({ 'username': req.user.username }).then(function(detail) {
+          console.log(detail);
+          
+            })
+        console.log(req.user);
         res.render("content",{ newDemands: foundDemands} );
       }
   
@@ -132,16 +156,22 @@ router.get("/content", function (req, res) {
 
 });
 
-router.post("/content", function(req, res){
+/* saving new demand and posting it */
+router.post("/createDemand", function(req,res){
 
-  const newDemand = new Demand({
-    username: req.user.username,
-    amount: req.body.amount,
-    reason: req.body.reason
-  });
-  demands.save(newDemand);
-  res.redirect("/");
-});
+  Detail.findOne({ 'username': req.user.username }).then(function(detail) {
+    console.log(detail);
+    const newDemand = new Demand({
+      userdetail: detail,
+      amount: req.body.amount,
+      time: dateTime,
+      reason: req.body.reason
+      });
+      newDemand.save();
+      });
+
+      res.redirect("content");
+})
 
 
 // Showing index page
@@ -181,19 +211,14 @@ router.get("/createDemand",(req,res)=>{
 
 // Handling user signup
 router.post("/register", async (req, res) => {
-  // console.log(Detail.find({username: req.body.username}));
 
-    // if(Detail.find({username: req.body.username}).length !== 0 || Detail.find({uniRollNo: req.body.uniRollNo}).length !== 0 || Detail.find({email: req.body.email}).length !== 0){
-    //   res.render("register", {msg1: "That user already exists", msg2:" ", msg3:" "});
- 
-    // }else{
-    //   const userDetail = new Detail({
-    //     username: req.body.username,
-    //     uniRollNo: req.body.uniRollNo,
-    //     email: req.body.email
-    //   })
-    //   Detail.insertMany(userDetail);
-    // }
+      const userDetail = new Detail({
+        username: req.body.username,
+        uniRollNo: req.body.uniRollNo,
+        email: req.body.email
+      })
+      userDetail.save();
+    
     
     User.register({ username : req.body.username }, req.body.password, function(err, user){
 

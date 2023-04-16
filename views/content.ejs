@@ -29,8 +29,8 @@
         </div>
     </div>
     <div class="middle-container">
+      <%  newDemands.forEach(function(demand){ %>
       <div class="demandPost">
-        <%  newDemands.forEach(function(demand){ %>
           <div class="demand">
             <div class="demand-header">
               <!--<img src="profile-picture.jpg" alt="Profile Picture">-->
@@ -44,9 +44,9 @@
             <div class="demand-footer">
               <!-- <a href="#" class="reply-link">reply</a> -->
               <a href="/payment" class="pay-link">Pay</a>
-              <%  }) %>
             </div>
           </div>
+      <%  }) %>
     </div>
     <div>
         <a href="/createDemand" class="create-Demand">Demand money</a>
