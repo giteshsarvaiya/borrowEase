@@ -195,9 +195,9 @@ router.get("/profile", function (req, res) {
       };
       getUserDemands().then(function(Demands){
       if (Demands.length === 0) {
-        res.render("profile", {username: req.user.username, email: detail.email, demands: Demands, noOfDemands: Demands.length});
+        res.render("profile", {username: req.user.username, email: detail.email, id: detail.uniRollNo, demands: Demands, noOfDemands: Demands.length});
       } else {
-        res.render("profile", {username: req.user.username, email: detail.email, demands: Demands , noOfDemands: Demands.length});
+        res.render("profile", {username: req.user.username, email: detail.email, id: detail.uniRollNo, demands: Demands , noOfDemands: Demands.length});
             }
           });
       });
