@@ -40,7 +40,9 @@
 			
 			<%} else { %>
 				<p>you have <%=noOfDemands%> demands</p>
-				<%  demands.forEach(function(demand){ %>
+				<% demands.forEach(function(demand){ %>
+					<p>Total money demanded by you</p>
+					<form action="/delete" method="post" ></form>
 					<div class="demandPost">
 						<div class="demand">
 						  <div class="demand-header">
@@ -52,10 +54,14 @@
 							<!-- <img src="images/favicon.ico" alt="BorrowEase Image"> -->
 						  </div>
 						  <div class="demand-footer">
-							<!-- <a href="#" class="reply-link">reply</a> -->
-							<a href="/delete" class="delete-link">delete</a>
+							<form method="POST" action="/delete">
+								<input type="hidden" name="id" value="<%=demand._id%>"/>
+								<input type="submit" value="Delete">
+								<!-- <a onclick="this.parentNode.submit()">Delete</a> </input> -->
+							</form>
 						  </div>
 						</div>
+					</form>
 					<%  }) %>
 				
 

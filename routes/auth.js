@@ -263,6 +263,19 @@ router.get("/login", function (req, res) {
 
 });
 
+//delete a post
+router.post("/delete", function (req, res) {
+
+  async function demandDelete(){
+    const deleteDemand = req.body.id;
+  
+    const del = await Demand.findByIdAndRemove(deleteDemand);
+  
+  };
+  demandDelete();
+ res.redirect("/profile")
+});
+
 //Handling user login
 router.post("/login", function(req, res){
   
