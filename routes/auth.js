@@ -144,7 +144,7 @@ router.get("/tnc", function (req, res) {
 
 // Showing register form
 router.get("/register", function (req, res) {
-  res.render("register");
+  res.render("register", {msg1:" ", msg2:" ", msg3:" "});
 });
 
 // Showing payment gateway
@@ -170,11 +170,17 @@ router.get("/createDemand",(req,res)=>{
 // Handling user signup
 router.post("/register", async (req, res) => {
 
-    const userDetail = new Detail({
-      username: req.body.username,
-      uniRollNo: req.body.uniRollNo,
-      email: req.body.email
-    })
+    if(Detail.find({username: req.body.username}).length !== 0 || Detail.find({uniRollNo: req.body.uniRollNo}).length !== 0 || Detail.find({email: req.body.email}).length !== 0){
+      res.render("register", {msg1: "That user already exists", msg2:" ", msg3:" "});
+ 
+    }else{
+      const userDetail = new Detail({
+        username: req.body.username,
+        uniRollNo: req.body.uniRollNo,
+        email: req.body.email
+      })
+      Detail.insertMany(userDetail);
+    }
     
     User.register({ username : req.body.username }, req.body.password, function(err, user){
 
@@ -191,7 +197,7 @@ router.post("/register", async (req, res) => {
 
 //Showing login form
 router.get("/login", function (req, res) {
-  res.render("login");
+  res.render("login", {msg: " "});
 
 });
 
