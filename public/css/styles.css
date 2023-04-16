@@ -44,14 +44,24 @@
     margin-right: 850px;
 }
 
-.credit-score {
+.register {
     position: relative;
     bottom: 50%;
+}
+
+.credit-score {
+  position: relative;
+  bottom: 50%;
 }
 
 .login {
     position: relative;
     bottom: 50%;
+}
+
+.logout {
+  position: relative;
+  bottom: 50%;
 }
 
 .middle-container {

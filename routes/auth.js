@@ -1,20 +1,29 @@
+require('dotenv').config();
 const { log } = require("console");
 const express = require("express"),
       bodyParser = require("body-parser"),
       ejs = require("ejs"),
       mongoose = require("mongoose"),
       session = require("express-session");
-      passport = require("passport"),
-      passportLocalMongoose = require("passport-local-mongoose"),
-      path = require("path")
+      passport = require("passport");
+      passportLocalMongoose = require("passport-local-mongoose");
+      path = require("path");
 
+/* function for current time */
+var today = new Date();
+var date = today.getDate()+'-'+(today.getMonth()+1)+'-'+today.getFullYear()
+var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+var dateTime =time+' '+date;
+
+//console.log(dateTime)
 var router = express.Router();
 router.use(express.static(path.join(__dirname, 'public')));
 
-router.use(bodyParser.urlencoded({extended:true})); 
+router.use(bodyParser.urlencoded({extended:true}));
+
 
 router.use(session({
-  secret: "this is my secret",
+  secret: "this is my secret. ",
   resave: false,
   saveUninitialized: false
 }));
@@ -25,80 +34,67 @@ router.use(passport.session());
 mongoose.connect("mongodb://127.0.0.1:27017/UserDB", { useNewUrlParser: true });
 
 
-/* userSchema */
-const userSchema = new mongoose.Schema({
-  userName: {
-    type: String
-},
-  uniRollNo: {
-    type: Number
-},
-  email: {
-    type: String
-},
-password: {
-    type: String
-}
+/* userDetailSchema */
+const userDetailSchema = new mongoose.Schema({
+  username: String,
+  uniRollNo: Number,
+  email: String,
 });
-userSchema.plugin(passportLocalMongoose);
-
-const User = new mongoose.model("User",userSchema)
 
 /* demandSchema */
 const demandSchema = new mongoose.Schema({
-  userDetails: {
-    type: [userSchema]
-  },
-  amount: {
-    type: Number
-  },
-  time: {
-    type: String
-  },
-  reason: {
-    type: String
-  }
-
+  userdetail: userDetailSchema,
+  amount: Number,
+  time: String,
+  reason: String
 });
 
-const Demand = new mongoose.model("Demand", demandSchema);
-// module.exports = mongoose.model("Demand", demandSchema);
+/*  userSchema */
+const userSchema = new mongoose.Schema({
+  username: String,
+  password: String,
+});
 
- /* creating user for demo */
- const user1 = new User ({
-  userName: "rajeevranjan",
-  uniRollNo: 1001,
-  email: "rajeevranjan@gmail.com",
-  password: "rajeevranjan",
- })
-// user1.save();
- /* Create a Demand*/
- const demand1 = new Demand ({
-  userDetails: [user1],
-  amount: 500,
-  time: dateTime,
-  // reason: "Educational purpose",
+userSchema.plugin(passportLocalMongoose);
 
- })
-
-// // importing user model
-// const User = require("../model/User")
+const Detail = new mongoose.model("Detail",userDetailSchema);
+const User = new mongoose.model("User",userSchema);
 
 passport.use(User.createStrategy());
 
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
+const Demand = new mongoose.model("Demand", demandSchema);
+// module.exports = mongoose.model("Demand", demandSchema);
 
 
+/* Create a User for demo  */
+const user1 = new User({
+  username: "rajeevranjan",
+  password: "rajeevranjan",
+});
 
-/* function for current time */
-var today = new Date();
-var date = today.getDate()+'-'+(today.getMonth()+1)+'-'+today.getFullYear()
-var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
-var dateTime =time+' '+date;
-//console.log(dateTime)
+ /* creating userDetail for demo */
+ const detail1 = new Detail ({
+  username: "rajeevranjan",
+  uniRollNo: 1001,
+  email: "rajeevranjan@gmail.com",
+ });
 
+ /* Create a Demand*/
+const demand1 = new Demand ({
+  userdetail: detail1,
+  amount: 500,
+  time: dateTime,
+  reason: "Educational Purpose",
+});
+
+ /* Registering Demo User1  */
+//  User.register({username: "rajeevranjan"}, "rajeevranjan"); // commented because it is supposed to run once only. otherwise it will throw error that the user already exists in DB.
+/* added userDetails to DB */
+
+// console.log(req.user.username);
 /* authCheck to redirect to previous page*/
 const authCheck = (req,res,next) => {
   if(!req.user){
@@ -108,63 +104,42 @@ const authCheck = (req,res,next) => {
     next();
   }
 };
+
+/* array of default posts */
 const defaultDemands = [demand1];
 
 async function getDemands(){
-  const foundDemands = await Demand.find({});
-  return foundDemands;
-}
+  const Demands = await Demand.find({});
+  return Demands;
+};
 
-// router.get("/", function (req, res) {
-  // res.send("hello, ${req.user.userName}!")
-  // const demandAmount = req.body.amount; 
-  // const reasonOfDemand = req.body.reason;
-  // const myName = req.user.userName;
-  // // const myUniNo = req.user.uniRollNo;
-  // const demand = new Demand({
-  //   userDetails:{userName: myName
-  //   },
-  //   amount: demandAmount,
-  //   reason: reasonOfDemand,
-  // });
+//show content page
+router.get("/content", function (req, res) {
+  if(req.isAuthenticated()){
+    getDemands().then(function(foundDemands){
+      if (foundDemands.length === 0) {
+        Demand.insertMany(defaultDemands);
+        res.redirect("/content");
+      } else {
+        res.render("content",{ newDemands: foundDemands} );
+      }
+  
+    });
+  }else{
+    res.redirect("/login")
+  }
 
-  // Demand.findOne({userName:[myName]}, function(err, foundDemands){
-  //   foundDemands.demands.push(demand);
-  //   foundDemands.save();
-  //   res.redirect("/");
-  // });
-//show home page
-router.get("/", function (req, res) {
-  getDemands().then(function(foundDemands){
-    if (foundDemands.length === 0) {
-      Demand.insertMany(defaultDemands);
-      res.redirect("/");
-    } else {
-      res.render("index", {newDemands: foundDemands });
-    }
-
-  });
-
-  //  res.render("index");
-  });
+});
 
 
-
-  // res.render("index");
-    const foundDemands = [];
 // Showing index page
-router.get("/index", isLoggedIn, function (req, res) {
-  getDemands().then(function(foundDemands){
-    if (foundDemands.length === 0) {
-      Demand.insertMany(defaultDemands);
-      res.redirect("/");
-    } else {
-      res.render("index", {newDemands: foundDemands });
-    }
+router.get("/", function (req, res) {
+  res.render("index");
+});
 
-  });
-
-  // res.render("index");
+// Showing tnc page
+router.get("/tnc", function (req, res) {
+  res.render("tnc");
 });
 
 // Showing register form
@@ -195,17 +170,23 @@ router.get("/createDemand",(req,res)=>{
 // Handling user signup
 router.post("/register", async (req, res) => {
 
-    User.register(new User({ username : req.body.username }), req.body.password, function(err, user){
+    const userDetail = new Detail({
+      username: req.body.username,
+      uniRollNo: req.body.uniRollNo,
+      email: req.body.email
+    })
+    
+    User.register({ username : req.body.username }, req.body.password, function(err, user){
 
    if(err){
     return res.render("register")
    }
    else{
     passport.authenticate('local')(req, res, function () {
-      res.redirect('/index');
+      res.redirect('/content');
     })
   }
-  });  
+  });
 });
 
 //Showing login form
@@ -228,7 +209,7 @@ router.post("/login", function(req, res){
         }else{
           passport.authenticate("local")(req,res,function(){
 
-            res.redirect("/index")
+            res.redirect("/content")
           })
         }
       })
@@ -250,4 +231,4 @@ router.post("/login", function(req, res){
     res.redirect("/login");
   }
 
-  module.exports = router
+  module.exports = router;

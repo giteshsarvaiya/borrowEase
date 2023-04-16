@@ -8,6 +8,12 @@ app.set('view engine', 'ejs');
 
 
 app.use(express.static(path.join(__dirname, 'public')));
+/* function for current time */
+var today = new Date();
+var date = today.getDate()+'-'+(today.getMonth()+1)+'-'+today.getFullYear()
+var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+var dateTime =time+' '+date;
+//console.log(dateTime)
 
 app.use("/", route);
 
