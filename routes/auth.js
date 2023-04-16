@@ -121,6 +121,7 @@ router.get("/content", function (req, res) {
         Demand.insertMany(defaultDemands);
         res.redirect("/content");
       } else {
+        console.log(req.user.username);
         res.render("content",{ newDemands: foundDemands} );
       }
   
@@ -129,6 +130,17 @@ router.get("/content", function (req, res) {
     res.redirect("/login")
   }
 
+});
+
+router.post("/content", function(req, res){
+
+  const newDemand = new Demand({
+    username: req.user.username,
+    amount: req.body.amount,
+    reason: req.body.reason
+  });
+  demands.save(newDemand);
+  res.redirect("/");
 });
 
 
@@ -169,18 +181,19 @@ router.get("/createDemand",(req,res)=>{
 
 // Handling user signup
 router.post("/register", async (req, res) => {
+  // console.log(Detail.find({username: req.body.username}));
 
-    if(Detail.find({username: req.body.username}).length !== 0 || Detail.find({uniRollNo: req.body.uniRollNo}).length !== 0 || Detail.find({email: req.body.email}).length !== 0){
-      res.render("register", {msg1: "That user already exists", msg2:" ", msg3:" "});
+    // if(Detail.find({username: req.body.username}).length !== 0 || Detail.find({uniRollNo: req.body.uniRollNo}).length !== 0 || Detail.find({email: req.body.email}).length !== 0){
+    //   res.render("register", {msg1: "That user already exists", msg2:" ", msg3:" "});
  
-    }else{
-      const userDetail = new Detail({
-        username: req.body.username,
-        uniRollNo: req.body.uniRollNo,
-        email: req.body.email
-      })
-      Detail.insertMany(userDetail);
-    }
+    // }else{
+    //   const userDetail = new Detail({
+    //     username: req.body.username,
+    //     uniRollNo: req.body.uniRollNo,
+    //     email: req.body.email
+    //   })
+    //   Detail.insertMany(userDetail);
+    // }
     
     User.register({ username : req.body.username }, req.body.password, function(err, user){
 
