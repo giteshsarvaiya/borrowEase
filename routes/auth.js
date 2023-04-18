@@ -8,6 +8,7 @@ const express = require("express"),
       passport = require("passport");
       passportLocalMongoose = require("passport-local-mongoose");
       path = require("path");
+      var popup = require('popups');
 
 /* function for current time */
 var today = new Date();
@@ -184,6 +185,9 @@ router.get("/tnc", function (req, res) {
   res.render("tnc");
 });
 
+/* declaring an array to help in calculating total amount asked and render it in profile of the user*/
+const amountAskedByUser = [];
+
 // Showing profile page
 router.get("/profile", function (req, res) {
   if(req.isAuthenticated()){
@@ -197,7 +201,14 @@ router.get("/profile", function (req, res) {
       if (Demands.length === 0) {
         res.render("profile", {username: req.user.username, email: detail.email, id: detail.uniRollNo, demands: Demands, noOfDemands: Demands.length});
       } else {
-        res.render("profile", {username: req.user.username, email: detail.email, id: detail.uniRollNo, demands: Demands , noOfDemands: Demands.length});
+        Demands.forEach(demand => {
+          amountAskedByUser.push(demand.amount);
+
+        });
+        const totalAmount = amountAskedByUser.reduce((partialSum, a) => partialSum + a, 0);
+        console.log(totalAmount); 
+
+        res.render("profile", {username: req.user.username, email: detail.email, id: detail.uniRollNo, demands: Demands , noOfDemands: Demands.length, total: totalAmount});
             }
           });
       });
