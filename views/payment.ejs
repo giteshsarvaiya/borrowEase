@@ -47,16 +47,17 @@
       <form action="/paymentSuccessful">
           <div class="inputBox">
               <span>card number</span>
-              <input type="text" pattern="\d*" maxlength="16" class="card-number-input">
+              <input type="text" pattern="\d*" maxlength="16" onkeypress="return event.charCode>=48 && event.charCode<=57"
+              class="card-number-input" required>
           </div>
           <div class="inputBox">
               <span>card holder</span>
-              <input type="text" class="card-holder-input">
+              <input type="text" class="card-holder-input" required>
           </div>
           <div class="flexbox">
               <div class="inputBox">
                   <span>expiration mm</span>
-                  <select name="" id="" class="month-input">
+                  <select name="" id="" class="month-input" required>
                       <option value="month" selected disabled>month</option>
                       <option value="01">01</option>
                       <option value="02">02</option>
@@ -74,7 +75,7 @@
               </div>
               <div class="inputBox">
                   <span>expiration yy</span>
-                  <select name="" id="" class="year-input">
+                  <select name="" id="" class="year-input" required>
                       <option value="year" selected disabled>year</option>
                       <option value="2021">2021</option>
                       <option value="2022">2022</option>
@@ -90,7 +91,7 @@
               </div>
               <div class="inputBox">
                   <span>cvv</span>
-                  <input type="text" pattern="\d*" min="0" maxlength="4" class="cvv-input">
+                  <input type="text" pattern="\d*" min="0" maxlength="4" onkeypress="return event.charCode>=48 && event.charCode<=57" class="cvv-input" required>
               </div>
           </div>
           <input type="submit" class="submit-btn" value="Pay Now"/>
