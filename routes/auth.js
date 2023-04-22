@@ -8,7 +8,7 @@ const express = require("express"),
       passport = require("passport");
       passportLocalMongoose = require("passport-local-mongoose");
       path = require("path");
-      var popup = require('popups');
+      
 
 /* function for current time */
 var today = new Date();
@@ -241,7 +241,13 @@ router.get("/createDemand",(req,res)=>{
   }else{
     res.redirect("/login")
   }
-})
+});
+
+router.post("/payment", async (req, res) => {
+    amount  = req.body.amount;
+    res.render("payment", {amount: amount})
+
+});
 
 
 // Handling user signup

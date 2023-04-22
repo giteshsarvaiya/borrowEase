@@ -30,6 +30,7 @@
     </div>
     <div class="middle-container">
       <%  newDemands.forEach(function(demand){ %>
+        <form action="/payment" method="post">
       <div class="demandPost">
           <div class="demand">
             <div class="demand-header">
@@ -38,14 +39,16 @@
               <span class="time"><%=demand.time%></span>
             </div>
             <div class="demand-body">
-              <p>I want <%=demand.amount%> Rupees for <%=demand.reason%></p>
+              <p>I need <input id="amount" type="text" class="value" name="amount" value="<%=demand.amount%>" readonly> Rupees for <%=demand.reason%></p>
               <img src="images/favicon.ico" alt="BorrowEase Image">
             </div>
             <div class="demand-footer">
               <!-- <a href="#" class="reply-link">reply</a> -->
-              <a href="/payment" class="pay-link">Pay</a>
+              <button type="submit">Pay</button>
+            </form>
             </div>
           </div>
+          <script src="auth.js"></script>
       <%  }) %>
     </div>
     <div>

@@ -24,6 +24,10 @@
         <div class="form-group">
           <label for="security-code">Security Code:</label>
           <input type="text" id="security-code" name="security-code">
+        <div class="form-group">
+          <label for="amount">Amount:</label>
+          <input type="text" id="amount" name="amount" value="<%=amount%>" readonly>
+        </div>
         </div>
        <input class="button-p" type="button" onclick="location.href='/paymentSuccessful';" value="Pay Now" /> 
       </form>
