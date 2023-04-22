@@ -66,7 +66,16 @@
 }
 
 .middle-container {
-    height: 1000px;
+    height: 900px;
+}
+
+.Body{
+  position: absolute;
+  padding: 0 2px 200px 0;
+  margin: 0 3px -3px -10px;
+  width:100%;
+  height:100%;
+  background-color: #212529;
 }
 
 .bottom-container {
@@ -427,4 +436,199 @@ a:active { text-decoration: none; }
     color: #0007d9;
     background-color: #ccc;
     border-color: #e8ebef;
+  }
+
+  /*body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background: #050505;
+  }*/
+  .Box1 {
+    position: absolute;
+    left: 10%;
+    top: 10%;
+  }
+  .Box2 {
+    position: absolute;
+    left: 30%;
+    top: 55%;
+  }
+
+  .box {
+    position: absolute;
+    border-radius: 20px;
+    transform-style: preserve-3d;
+  }
+
+  .box .card {
+    position: relative;
+    background: rgba(225,225,225,0.5);
+    width: 300px;
+    min-height: 300px;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(225,225,225,0.5);
+    border-top: 1px solid rgba(225,225,225,0.75);
+    border-left: 1px solid rgba(225,225,225,0.75);
+    border-radius: 20px;
+    box-shadow: 0 25px 45px rgba(0, 0, 0, 0.05);
+    transform-style: preserve-3d;
+  }
+
+  .elements {
+    position: absolute;
+    top: -30px;
+    left: -30px;
+    width: 100px;
+    height: 100px;
+    background: rgba(225,225,225,0.1);
+    transform: translateZ(80px);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(225,225,225,0.5);
+    border-top: 1px solid rgba(225,225,225,0.75);
+    border-left: 1px solid rgba(225,225,225,0.75);
+    border-radius: 10px;
+    box-shadow: 0 25px 45px rgba(0, 0, 0, 0.05);
+  }
+
+  .elements.bg::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: url();
+    background-size: 60px;
+    background-position: center;
+    background-repeat: no-repeat;
+    opacity: 0;
+    transition: 0.5s;
+  }
+
+  .box:hover.elements.bg::before {
+    opacity: 1;
+  }
+
+  .elements.name {
+    top: 135px;
+    left: initial;
+    right: 0;
+    width: 100%;
+    padding: 10px;
+    text-align: right;
+    transform: translateZ(180px);
+    background: transparent;
+    backdrop-filter: blur(0px);
+    border: none;
+    box-shadow: none;
+    color: #007bff;
+    transition: 0.5s;
+    transition-delay: 0.25s;
+  }
+
+  .btn:hover .elements.name {
+    top: 35px;
+    opacity: 1;
+  }
+
+  .elements.content {
+    top: initial;
+    left: initial;
+    bottom: 0;
+    right: -20px;
+    width: 85%;
+    min-height: 200px;
+    padding: 10px;
+    transform: translateZ(180px);
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .elements.content p {
+    position: relative;
+    color: ;
+    font-size: 0.85em;
+    transition: 0.5s;
+    opacity: 0;
+    transition-delay: 0.5s;
+  }
+
+  .box:hover .elements.content p {
+    opacity: 1;
+  }
+
+  .cube {
+    position: absolute;
+    left: 70%;
+    top: 30%;
+    width: 300px;
+    height: 300px;
+    transform-style: preserve-3d;
+    transform: rotateX(-30deg);
+    animation: animate 4s linear infinite;
+}
+  @keyframes animate{
+    0%
+    {
+      transform: rotateX(-30deg) rotateY(0deg);
+    }
+    100%
+    {
+      transform: rotateX(-30deg) rotateY(360deg);
+    }
+  }
+  .cube div {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    transform-style: preserve-3d;
+
+  }
+  .cube div span
+  {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(#151515,#7065EF);
+    transform: rotateY(calc(90deg * var(--i))) translateZ(150px);
+  }
+
+  .top {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 300px;
+    height: 300px;
+    background: #222;
+    transform: rotateX(90deg) translateZ(150px);
+  }
+
+  .cube-logo {
+    position: relative;
+    left: 0%;
+    top: 22%;
+    height: 172px;
+  }
+
+  .top::before
+  {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 300px;
+    height: 300px;
+    background: #7065EF;
+    transform: translateZ(-380px);
+    filter: blur(20px);
+    box-shadow: 0 0 120px rgba(127,17,224,0.2),
+    0 0 200px rgba(127,17,224,0.4),
+    0 0 300px rgba(127,17,224,0.6),
+    0 0 400px rgba(127,17,224,0.8),
+    0 0 500px rgba(127,17,224,1);
   }
